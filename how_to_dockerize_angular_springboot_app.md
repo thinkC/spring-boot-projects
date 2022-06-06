@@ -1,12 +1,10 @@
-# Hpow to Dockerize Angular and Spring Boot Application
+# How to Dockerize Angular and Spring Boot Application
 
-The following Prequisites are needed 
+The following Prequisites are required and installed
 * Java JDK 16.0.1
 * Node 14.7.*
 * Angular CLI 1.7.4
 * Python v3.10.* (added to path)
-
-The following are installed
 
 Checking the installed versions:
 
@@ -92,7 +90,7 @@ I then accessed the app on `localhost:4200`
 
 ![angular_page](./img/img3.PNG)
 
-## Dockerizing Angular Spring Bott Application
+## Dockerizing Angular Spring Boot Application
 
 ### Step 1
 I created a docker file in 
@@ -101,7 +99,11 @@ I created a docker file in
 touch Docker
 ```
 
-I then create a script to build the image for the frontend angular application
+I then create a script to build the image for the frontend angular application in below directory
+
+`spring-boot-projects\spring-boot-modules\spring-boot-angular\src\main\js\application`
+![docker_frontend_directory](./img/img4.PNG)
+
 ```javascript
 #Build Stage
 FROM node:14.7.0-alpine3.12 AS build
@@ -113,4 +115,49 @@ RUN npm install -g @angular/cli@1.7.4
 COPY ./ /app/
 RUN npm build --prod
 CMD [ "npm", "start" ]
+```
+I ran script below to create the frontend image and named it `angular-app` in the current directory
+```bash
+docker build -t angular-app .
+```
+
+I ran docker images to list the images
+
+```bash
+docker images
+```
+
+output 
+```bash
+REPOSITORY                                 TAG       IMAGE ID       CREATED         SIZE
+angular-app                                latest    6cbe74900cef   2 minutes ago   875MB
+ghcr.io/conradludgate/spotify-auth-proxy   latest    1a52fb79bae0   9 months ago    12.9MB
+```
+I ran below script to create and start the container for the angular frontend docker image and opened port 4200 on the host pc which is my laptopp and port 4200 on container.
+
+```bash
+$ docker run -p 4200:4200 --name angular-container angular-app
+```
+
+
+
+```javascript
+#Build Stage
+FROM maven:3.6-openjdk-8-slim AS build
+RUN mkdir -p /app/src
+COPY . /app/src
+WORKDIR /app
+RUN mvn clean package
+#RUN mvn spring-boot:run
+#VOLUME /files
+#WORKDIR /app
+#COPY --from=build /app/src/target/spring-boot-angular-1.0.jar /app/app.jar
+#ENTRYPOINT ["java", "-jar", "app.jar"]
+```
+
+when I ran below
+```bash
+Babatunde@DESKTOP-IEQG8EN MINGW64 ~/Desktop/spring-boot-projects (master)
+$ docker run --name spring-boot-container spring-boot-app
+no main manifest attribute, in /app/app.jar
 ```
