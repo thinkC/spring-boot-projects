@@ -99,3 +99,55 @@ To run the integration tests, use the command:
 `mvn clean install -Pintegration-jdk9-and-above`
 
 depending on the list where our module exists
+
+
+################
+
+$ docker build -t angular-app .
+[+] Building 232.9s (14/14) FINISHED
+ => [internal] load build definition from Dockerfile                                                 0.4s 
+ => => transferring dockerfile: 32B                                                                  0.1s 
+ => [internal] load .dockerignore                                                                    0.2s 
+ => => transferring context: 2B                                                                      0.0s 
+ => [internal] load metadata for docker.io/library/node:14.7.0-alpine3.12                            1.8s 
+ => [auth] library/node:pull token for registry-1.docker.io                                          0.0s 
+ => [1/8] FROM docker.io/library/node:14.7.0-alpine3.12@sha256:fb3a745115b4bb43e4fa63cc5a1d78a9f799  0.0s 
+ => [internal] load build context                                                                   14.7s 
+ => => transferring context: 2.18MB                                                                 14.1s 
+ => CACHED [2/8] RUN mkdir -p /app                                                                   0.0s 
+ => CACHED [3/8] WORKDIR /app                                                                        0.0s 
+ => CACHED [4/8] COPY package*.json /app/                                                            0.0s 
+ => [5/8] RUN npm install                                                                           69.5s 
+ => [6/8] RUN npm install -g @angular/cli@1.7.4                                                    106.1s 
+ => [7/8] COPY ./ /app/                                                                             30.6s 
+ => [8/8] RUN npm build --prod                                                                       1.3s 
+ => exporting to image                                                                               8.1s 
+ => => exporting layers                                                                              8.0s 
+ => => writing image sha256:6cbe74900cef7e468255a614995665213188caea8273819a17ab3816222e6b99         0.0s 
+ => => naming to docker.io/library/angular-app                                                       0.0s 
+
+Use 'docker scan' to run Snyk tests against images to find vulnerabilities and learn how to fix them 
+
+Babatunde@DESKTOP-IEQG8EN MINGW64 ~/Desktop/spring-boot-projects/spring-boot-modules/spring-boot-angular/src/main/js/application (master)
+$ docker images
+REPOSITORY                                 TAG       IMAGE ID       CREATED         SIZE
+angular-app                                latest    6cbe74900cef   2 minutes ago   875MB
+ghcr.io/conradludgate/spotify-auth-proxy   latest    1a52fb79bae0   9 months ago    12.9MB
+
+##################
+$ docker run -p 4200:4200 --name angular-container angular-app
+
+> sampleapp@0.0.0 start /app
+> ng serve --host 0.0.0     
+
+** NG Live Development Server is listening on 0.0.0:4200, open your browser on http://0.0.0:4200/ **
+Date: 2022-06-05T18:19:39.705Z
+Hash: 88c92c6560130a57ee12
+Time: 7784ms
+chunk {inline} inline.bundle.js (inline) 3.85 kB [entry] [rendered]
+chunk {main} main.bundle.js (main) 43.2 kB [initial] [rendered]
+chunk {polyfills} polyfills.bundle.js (polyfills) 596 kB [initial] [rendered]
+chunk {styles} styles.bundle.js (styles) 41.6 kB [initial] [rendered]
+chunk {vendor} vendor.bundle.js (vendor) 9.55 MB [initial] [rendered]
+
+webpack: Compiled successfully.
