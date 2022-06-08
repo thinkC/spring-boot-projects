@@ -129,9 +129,9 @@ RUN npm build --prod
 CMD [ "npm", "start" ]
 ```
 * FROM - this installs parent image and name it as `build`
-* RUN mkdir - creates a _/app_ folder on the container.
+* RUN mkdir - creates a `/app` folder on the container.
 * WORKDIR - set the working directory for any command that is ran.
-* COPY - The first _COPY_, copies the package.json file of the angular application. to the _/app_ directory that is created on the container. While the second _COPY_ copies all the files and directory at the current location to the _app_ directory of the container.
+* COPY - The first `COPY`, copies the package.json file of the angular application. to the `/app` directory that is created on the container. While the second `COPY` copies all the files and directory at the current location to the _app_ directory of the container.
 * RUN npm build --prod - builds a directory of the production build of the angular frontend.
 * CMD - These command will always be executed when the docker starts.
 
@@ -157,8 +157,8 @@ I ran below script to create and start the container for the angular frontend do
 ```bash
 $ docker run -p 4200:4200 --name angular-container angular-app
 ```
-* -p is port to run on where 4200 is the port on the host and the other 4200 is the port on the container.
-* --name angular-container is the name I give the angular container. While angular-app is the angular frontend image.
+* `-p` is port to run on where 4200 is the port on the host and the other 4200 is the port on the container.
+* `--name` angular-container is the name I give the angular container. While angular-app is the angular frontend image.
 
 The angular container ran successfully
 
@@ -200,9 +200,9 @@ COPY --from=build /spring-boot-project/spring-boot-modules/spring-boot-angular/t
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
 ```
 * FROM - this installs parent image and name it as `build`
-* RUN mkdir - creates a directory called _spring-boot-project_ on the container. 
+* RUN mkdir - creates a directory called `spring-boot-project` on the container. 
 * WORKDIR - set the working directory for any command that is ran
-* COPY - The first _COPY_, copies the all the content from the current directory to the _/spring-boot-project_ directory that is created on the container. While the second _COPY_ copies the _build image_ fron the build stage with the `spring-boot-angular-1.0.jar` file its _target_ directory to _/app/app.jar_ of the container.
+* COPY - The first `COPY`, copies the all the content from the current directory to the `/spring-boot-project` directory that is created on the container. While the second `COPY` copies the `build image` fron the build stage with the `spring-boot-angular-1.0.jar` file its `target` directory to `/app/app.jar` of the container.
 * ENTRYPOINT - This is the command that will always be executed when the container starts.
 
 Next, I ran script below to create the backend image and named it `spring-boot-app1` in the current directory
