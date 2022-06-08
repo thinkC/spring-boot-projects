@@ -77,14 +77,20 @@ npm install
 
 Next I ran `ng serve` to launch the frontend application
 
-I then installed maven dependencies
+I then installed maven dependencies in 
 
 ```bash
 mvn clean install
 ```
+
+and ran _mvn clean package_ from this directory `spring-boot-projects\spring-boot-modules\spring-boot-angular`
+
+```bash
+mvn clean package
+```
 Next, I ran mvn spring-boot to start the spring-boot backend
 ```bash
-run: mvn spring-boot:run
+mvn spring-boot:run
 ```
 
 I then accessed the app on `localhost:4200`
@@ -100,7 +106,7 @@ I changed directory to `spring-boot-projects\spring-boot-modules\spring-boot-ang
  and created `Dockerfile`.
 
 ```bash
-touch Docker
+touch Dockerfile
 ```
 
 I then created a script to build the docker image for the frontend angular application in below directory.
@@ -162,7 +168,7 @@ I created a docker file in this directory location.`spring-boot-projects\spring-
 change directory to `spring-boot-projects\spring-boot-modules\spring-boot-angular`
  and create `Dockerfile`
 ```bash
-touch Docker
+touch Dockerfile
 ```
 
 ![docker_backend_directory](./img/img7.PNG)
