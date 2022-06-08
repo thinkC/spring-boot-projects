@@ -93,17 +93,20 @@ I then accessed the app on `localhost:4200`
 ## Dockerizing Angular Spring Boot Application
 
 ### Step 1
-I created a docker file in 
+I created a docker file in this directory location `spring-boot-projects\spring-boot-modules\spring-boot-angular\src\main\js\application`
 
+change directory to `spring-boot-projects\spring-boot-modules\spring-boot-angular\src\main\js\application`
+ and create `Dockerfile`
 ```bash
 touch Docker
 ```
 
-I then create a script to build the image for the frontend angular application in below directory
+I then create a script to build the docker image for the frontend angular application in below directory
 
 `spring-boot-projects\spring-boot-modules\spring-boot-angular\src\main\js\application`
 ![docker_frontend_directory](./img/img4.PNG)
 
+### script for frontend docker angular image
 ```javascript
 #Build Stage
 FROM node:14.7.0-alpine3.12 AS build
@@ -138,26 +141,65 @@ I ran below script to create and start the container for the angular frontend do
 ```bash
 $ docker run -p 4200:4200 --name angular-container angular-app
 ```
+-p is port to run on where 4200 is the port on the host and the other 4200 is the port on the container.
+--name angular-container is the name I give the angular container. While angular-app is the angular frontend image.
 
+The angular container ran successfully
 
+![docker_frontend_running](./img/img8.PNG)
+
+I opend the browser on port localhost:4200 and the frontend is displayed.
+![docker_frontend_browser](./img/img5.PNG)
+
+### Step 2
+
+I created a docker file in this directory location.`spring-boot-projects\spring-boot-modules\spring-boot-angular`
+
+change directory to `spring-boot-projects\spring-boot-modules\spring-boot-angular`
+ and create `Dockerfile`
+```bash
+touch Docker
+```
+
+![docker_backend_directory](./img/img7.PNG)
+
+### script for backend docker spring-boot image
 
 ```javascript
 #Build Stage
 FROM maven:3.6-openjdk-8-slim AS build
-RUN mkdir -p /app/src
-COPY . /app/src
-WORKDIR /app
+RUN mkdir -p /spring-boot-project 
+COPY . /spring-boot-project
+
+WORKDIR /spring-boot-project/spring-boot-modules/spring-boot-angular
+RUN cd  /spring-boot-project/spring-boot-modules/spring-boot-angular
 RUN mvn clean package
-#RUN mvn spring-boot:run
-#VOLUME /files
-#WORKDIR /app
-#COPY --from=build /app/src/target/spring-boot-angular-1.0.jar /app/app.jar
-#ENTRYPOINT ["java", "-jar", "app.jar"]
+
+# Run Stage
+FROM openjdk:8-jre-alpine
+COPY --from=build /spring-boot-project/spring-boot-modules/spring-boot-angular/target/spring-boot-angular-1.0.jar /app/app.jar
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
 ```
 
-when I ran below
+Next, I ran script below to create the frontend image and named it `angular-app` in the current directory
+
 ```bash
-Babatunde@DESKTOP-IEQG8EN MINGW64 ~/Desktop/spring-boot-projects (master)
-$ docker run --name spring-boot-container spring-boot-app
-no main manifest attribute, in /app/app.jar
+ docker build -t spring-boot-app1 .
+ ```
+ I ran docker images to list the images
+
+```bash
+docker images
 ```
+output 
+![docker_images](./img/img9.PNG)
+
+I then ran the spring-boot container and is running
+
+![docker_spring-boot-container-running](./img/img9a.PNG)
+
+I did `docker ps` to show all running containers
+
+![docker_all_running_container](./img/img10.PNG)
+
+I successfully created both fronend and backend docker images and running containers.
