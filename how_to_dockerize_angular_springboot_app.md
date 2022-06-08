@@ -53,6 +53,11 @@ Python 3.9.6
 
 I cloned the entire repository and change directory to application where the frontend angular project and backend spring boot task are.
 
+
+```bash
+git clone https://github.com/aizedevops/spring-boot-projects.git
+```
+
 - change directory for frontend
 ```bash
 cd spring-boot-modules/spring-boot-angular/src/main/js/application/
@@ -60,10 +65,6 @@ cd spring-boot-modules/spring-boot-angular/src/main/js/application/
 - change directory for backend
 ```bash
 cd spring-boot-modules/spring-boot-angular
-```
-
-```bash
-git clone https://github.com/aizedevops/spring-boot-projects.git
 ```
 
 Next I made sure the version of Node I am using is 14.7.0 and the angular cli version is 1.7.4. 
@@ -95,15 +96,17 @@ I then accessed the app on `localhost:4200`
 ### Step 1
 I created a docker file in this directory location `spring-boot-projects\spring-boot-modules\spring-boot-angular\src\main\js\application`
 
-change directory to `spring-boot-projects\spring-boot-modules\spring-boot-angular\src\main\js\application`
- and create `Dockerfile`
+I changed directory to `spring-boot-projects\spring-boot-modules\spring-boot-angular\src\main\js\application`
+ and created `Dockerfile`.
+
 ```bash
 touch Docker
 ```
 
-I then create a script to build the docker image for the frontend angular application in below directory
+I then created a script to build the docker image for the frontend angular application in below directory.
 
 `spring-boot-projects\spring-boot-modules\spring-boot-angular\src\main\js\application`
+
 ![docker_frontend_directory](./img/img4.PNG)
 
 ### script for frontend docker angular image
@@ -136,22 +139,23 @@ REPOSITORY                                 TAG       IMAGE ID       CREATED     
 angular-app                                latest    6cbe74900cef   2 minutes ago   875MB
 ghcr.io/conradludgate/spotify-auth-proxy   latest    1a52fb79bae0   9 months ago    12.9MB
 ```
-I ran below script to create and start the container for the angular frontend docker image and opened port 4200 on the host pc which is my laptopp and port 4200 on container.
+I ran below script to create and start the container for the angular frontend docker image and opened port 4200 on the host pc which is my laptop and port 4200 on container.
 
 ```bash
 $ docker run -p 4200:4200 --name angular-container angular-app
 ```
--p is port to run on where 4200 is the port on the host and the other 4200 is the port on the container.
---name angular-container is the name I give the angular container. While angular-app is the angular frontend image.
+* -p is port to run on where 4200 is the port on the host and the other 4200 is the port on the container.
+* --name angular-container is the name I give the angular container. While angular-app is the angular frontend image.
 
 The angular container ran successfully
 
 ![docker_frontend_running](./img/img8.PNG)
 
 I opend the browser on port localhost:4200 and the frontend is displayed.
+
 ![docker_frontend_browser](./img/img5.PNG)
 
-### Step 2
+### Step 2 - Dockerize backend spring-boot
 
 I created a docker file in this directory location.`spring-boot-projects\spring-boot-modules\spring-boot-angular`
 
@@ -181,7 +185,7 @@ COPY --from=build /spring-boot-project/spring-boot-modules/spring-boot-angular/t
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
 ```
 
-Next, I ran script below to create the frontend image and named it `angular-app` in the current directory
+Next, I ran script below to create the backend image and named it `spring-boot-app1` in the current directory
 
 ```bash
  docker build -t spring-boot-app1 .
@@ -191,7 +195,8 @@ Next, I ran script below to create the frontend image and named it `angular-app`
 ```bash
 docker images
 ```
-output 
+output
+
 ![docker_images](./img/img9.PNG)
 
 I then ran the spring-boot container and is running
