@@ -161,6 +161,8 @@ I opend the browser on port localhost:4200 and the frontend is displayed.
 
 ![docker_frontend_browser](./img/img5.PNG)
 
+Note: Before running. I updated the package.json file on the start script , added `--host 0.0.0` to the _ng serve_ . I had to re-create the docker image and recreate the container for this to work.
+
 ### Step 2 - Dockerize backend spring-boot
 
 I created a docker file in this directory location.`spring-boot-projects\spring-boot-modules\spring-boot-angular`
